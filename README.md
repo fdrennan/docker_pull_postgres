@@ -2,6 +2,8 @@
 
 Watch the video here: https://youtu.be/dMyGdYmhfmI
 
+Install Docker and Docker Compose
+
 In this folder run in bash - 
 
 
