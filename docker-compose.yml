@@ -1,20 +1,23 @@
-version: '3.3'
+version: '3.4'
 services:
-  db:
-   image: "postgres"
-   container_name: "connectr_postgres"
-   restart: always
-   ports:
-     - '5432:5432'
-   expose:
-      # Opens port 5432 on the container
-     - '5432'
-    # Where our data will be persisted
-   volumes:
-     - postgres:/var/lib/postgresql/data
-   environment:
-     - POSTGRES_USER:'postgres'
-     - POSTGRES_PASSWORD:'docker'
-     - POSTGRES_DB:'postgres'
-volumes:
   postgres:
+    image: postgres:12.3
+    container_name: "postgres"
+    restart: always
+    ports:
+      - '5400:5432'
+    expose:
+      # Opens port 5432 on the container
+      - '5400'
+      # Where our data will be persisted
+    env_file: .env
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    healthcheck:
+        test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+        interval: 30s
+        timeout: 30s
+        retries: 5
+volumes:
+  postgres: {}
+
